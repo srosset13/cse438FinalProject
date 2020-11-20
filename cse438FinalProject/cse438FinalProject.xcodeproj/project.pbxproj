@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A9C028C25684FC70018F6B8 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9C028B25684FC70018F6B8 /* QuestionCell.swift */; };
 		63EC9B0925636B1E00D85C86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC9B0825636B1E00D85C86 /* AppDelegate.swift */; };
 		63EC9B0B25636B1E00D85C86 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC9B0A25636B1E00D85C86 /* SceneDelegate.swift */; };
 		63EC9B0D25636B1E00D85C86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC9B0C25636B1E00D85C86 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A9C028B25684FC70018F6B8 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
 		63EC9B0525636B1E00D85C86 /* cse438FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cse438FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63EC9B0825636B1E00D85C86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63EC9B0A25636B1E00D85C86 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				63EC9B0A25636B1E00D85C86 /* SceneDelegate.swift */,
 				63EC9B0C25636B1E00D85C86 /* ViewController.swift */,
 				63EC9B0E25636B1E00D85C86 /* Main.storyboard */,
+				3A9C028B25684FC70018F6B8 /* QuestionCell.swift */,
 				63EC9B1125636B2100D85C86 /* Assets.xcassets */,
 				63EC9B1325636B2100D85C86 /* LaunchScreen.storyboard */,
 				63EC9B1625636B2100D85C86 /* Info.plist */,
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63EC9B0D25636B1E00D85C86 /* ViewController.swift in Sources */,
+				3A9C028C25684FC70018F6B8 /* QuestionCell.swift in Sources */,
 				63EC9B0925636B1E00D85C86 /* AppDelegate.swift in Sources */,
 				63EC9B0B25636B1E00D85C86 /* SceneDelegate.swift in Sources */,
 			);
