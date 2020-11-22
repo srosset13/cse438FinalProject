@@ -11,7 +11,16 @@ import UIKit
 
 class NewPatientProfile: UIViewController{
     
-    var size = 5
+    @IBAction func createNewProfBtn(_ sender: Any) {
+        
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
+        let mainApp = storyboard.instantiateViewController(withIdentifier: "tabBarController");
+
+        self.navigationController?.pushViewController(mainApp, animated: true)
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

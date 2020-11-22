@@ -10,20 +10,35 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var newProfile = NewPatientProfile()
     
     @IBAction func newPatientBtn(_ sender: Any) {
-        
-//        let vc = storyboard.instantiateViewControllerWithIdentifier("MySecondSecreen") as! UIViewController;
-       self.present(newProfile, animated: true, completion: nil);
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
+        let newProfile = storyboard.instantiateViewController(withIdentifier: "newPatientProfID") as! NewPatientProfile;
+
+        self.navigationController?.pushViewController(newProfile, animated: true)
+
         
     }
     
+    @IBAction func loginBtn(_ sender: Any) {
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
+        let mainApp = storyboard.instantiateViewController(withIdentifier: "tabBarController");
+
+        self.navigationController?.pushViewController(mainApp, animated: true)
+
+    }
+    
+   
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.navigationController?.isNavigationBarHidden = true
+
+        
     }
 
 
