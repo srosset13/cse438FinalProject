@@ -9,7 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    var newProfile = NewPatientProfile()
+    
+    @IBAction func newPatientBtn(_ sender: Any) {
+        
+        navigationController?.pushViewController(newProfile, animated: true)
+        
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

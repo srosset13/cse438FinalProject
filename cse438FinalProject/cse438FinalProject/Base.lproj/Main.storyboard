@@ -86,6 +86,9 @@
                                         </fragment>
                                     </attributedString>
                                 </state>
+                                <connections>
+                                    <action selector="newPatientBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mmF-fu-DMG"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.27950068515278059" green="1" blue="0.37766479651019791" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -176,10 +179,10 @@
             </objects>
             <point key="canvasLocation" x="1636.6906474820146" y="100"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--OpeningPage-->
         <scene sceneID="C69-UQ-czg">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="fk2-57-SVl" sceneMemberID="viewController">
+                <tabBarController title="OpeningPage" automaticallyAdjustsScrollViewInsets="NO" id="fk2-57-SVl" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GjZ-Ri-UiV">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -544,7 +547,7 @@
         <!--New Patient Setup Page-->
         <scene sceneID="Pn4-6f-aGk">
             <objects>
-                <viewController title="New Patient Setup Page" id="CXq-OI-Puj" customClass="ViewController" customModule="cse438FinalProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="New Patient Setup Page" id="CXq-OI-Puj" customClass="NewPatientProfile" customModule="cse438FinalProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="19A-9h-lPJ">
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -683,7 +686,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="he6-Zn-MjP" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138.84892086330936" y="852.7638190954774"/>
+            <point key="canvasLocation" x="152" y="837"/>
         </scene>
     </scenes>
     <resources>
