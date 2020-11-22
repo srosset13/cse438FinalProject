@@ -11,7 +11,7 @@ import UIKit
 
 class NewPatientProfile: UIViewController{
     
-    
+    var size = 5
     
     override func viewDidLoad() {
         super.viewDidLoad()

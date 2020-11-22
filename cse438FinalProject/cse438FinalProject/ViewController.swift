@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     
     @IBAction func newPatientBtn(_ sender: Any) {
         
-        navigationController?.pushViewController(newProfile, animated: true)
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("MySecondSecreen") as! UIViewController;
+       self.present(newProfile, animated: true, completion: nil);
         
     }
     
