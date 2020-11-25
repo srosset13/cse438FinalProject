@@ -1,0 +1,6 @@
+framework module Pods_cse438FinalProject {
+  umbrella header "Pods-cse438FinalProject-umbrella.h"
+
+  export *
+  module * { export * }
+}
