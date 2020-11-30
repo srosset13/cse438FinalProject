@@ -7,5 +7,5 @@ target 'cse438FinalProject' do
 
   # Pods for cse438FinalProject
   pod 'Firebase/Database'
-
+  pod 'Firebase/Firestore'
 end

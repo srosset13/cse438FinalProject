@@ -17,3 +17,14 @@ class QuestionCell: UICollectionViewCell {
     @IBOutlet weak var crit2Label: UILabel!
     @IBOutlet weak var answerBar: UISegmentedControl!
 }
+struct DatabaseResults {
+    let questions: [Question]
+}
+
+struct Question: Decodable {
+    let Crit0: String?
+    let Crit1: String?
+    let Crit2: String?
+    let Question: String?
+    let StartingPoint: String?
+}
