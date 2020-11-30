@@ -48,13 +48,13 @@
                                 <rect key="frame" x="397" y="533" width="251" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hNv-lz-xDt">
                                 <rect key="frame" x="397" y="627" width="251" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfg-gN-wo1">
                                 <rect key="frame" x="237" y="347" width="361" height="86"/>
@@ -114,6 +114,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="keO-C4-guq"/>
+                    <connections>
+                        <outlet property="password" destination="hNv-lz-xDt" id="7VW-rb-gat"/>
+                        <outlet property="patientID" destination="5zF-z0-RT7" id="kUF-D0-RG0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -679,6 +683,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="7x9-Da-csq">
+                                <rect key="frame" x="406.93688612367441" y="587.28626876785347" width="19.999999999999545" height="19.999999999999545"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hLF-jL-tZ8">
                                 <rect key="frame" x="20" y="235" width="794" height="877"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -795,6 +803,7 @@
                     </view>
                     <connections>
                         <outlet property="questionsCollection" destination="hLF-jL-tZ8" id="Fmo-4f-h7a"/>
+                        <outlet property="spinner" destination="7x9-Da-csq" id="0vU-xa-2kj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kH8-vK-D5T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -847,7 +856,7 @@
                                 <rect key="frame" x="448" y="540" width="251" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SWW-fO-1ay">
                                 <rect key="frame" x="217" y="827" width="400" height="66"/>
@@ -943,6 +952,12 @@
                         <color key="backgroundColor" red="0.27950068519999999" green="1" blue="0.37766479650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="TZ0-cC-vRo"/>
                     </view>
+                    <connections>
+                        <outlet property="insurance" destination="RUd-xe-sDY" id="Hqw-fj-PbP"/>
+                        <outlet property="name" destination="VWI-j0-XDe" id="xn5-ii-Bfe"/>
+                        <outlet property="password" destination="x7A-pj-eMD" id="BHk-ID-wI8"/>
+                        <outlet property="patientID" destination="i6B-j6-nRh" id="LYi-5I-pHM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="he6-Zn-MjP" sceneMemberID="firstResponder"/>
             </objects>

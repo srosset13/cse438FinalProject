@@ -11,6 +11,11 @@ import UIKit
 
 class NewPatientProfile: UIViewController{
     
+    @IBOutlet weak var patientID: UITextField!
+    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var name: UITextField!
+    @IBOutlet weak var insurance: UITextField!
+    
     @IBAction func createNewProfBtn(_ sender: Any) {
         
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
