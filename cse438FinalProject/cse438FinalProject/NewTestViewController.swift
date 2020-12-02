@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import FirebaseFirestore
 
 class NewTestViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
     
@@ -45,11 +46,10 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-
         let detailView = storyboard.instantiateViewController(withIdentifier: "detailTestView");
 
         self.navigationController?.pushViewController(detailView, animated: true)
-
+        
     }
     
     
@@ -61,7 +61,10 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         //unhide the nav bar??
     }
     
-    
+    //TODO probably load all questions here so we can
+    //save values for each question, pass questions to
+    // the vc
+    var fineMotorQuestions = [Question]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,9 +72,11 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         setUpCollectionView()
 
     }
+
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
+
     }
     
     

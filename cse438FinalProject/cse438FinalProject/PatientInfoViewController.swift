@@ -34,7 +34,8 @@ class PatientInfoViewController: UIViewController{
                     
                 }
             }
-            //do stuff below once query has finished
+            // do stuff below once query has finished
+            // data holds all test results
             print(data)
         })
     }

@@ -106,7 +106,7 @@ class ViewController: UIViewController {
                     self.navigationController?.pushViewController(mainApp, animated: true)
                     self.patientID.text = ""
                     self.password.text = ""
-                    
+
                 }
                 else{
                     print("INCORRECT CREDS")

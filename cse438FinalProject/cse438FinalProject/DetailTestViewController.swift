@@ -40,10 +40,11 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     @IBOutlet weak var questionsCollection: UICollectionView!
+    
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     override func viewDidLoad() {
-        self.spinner.isHidden = false
+//        self.spinner.isHidden = false
         setUpCollectionView()
         super.viewDidLoad()
         
@@ -71,6 +72,7 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
     var allQuestions: [Question] = []
     func fetchQuestions(){
         let db = Firestore.firestore()
+        //TODO update this to the specific test
         db.collection("fineMotorQuestions").getDocuments(completion: { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -82,10 +84,10 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
                     self.allQuestions.append(new_question)
 
                 }
-                
+
             }
-            self.spinner.isHidden = true
-            self.spinner.stopAnimating()
+//            self.spinner.isHidden = true
+//            self.spinner.stopAnimating()
             self.questionsCollection.reloadData()
         })
         

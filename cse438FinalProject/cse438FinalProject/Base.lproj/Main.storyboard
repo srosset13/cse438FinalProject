@@ -692,10 +692,6 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="7x9-Da-csq">
-                                    <rect key="frame" x="0.0" y="0.0" width="794" height="877"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="questionCell" id="LJb-pT-DxJ" customClass="QuestionCell" customModule="cse438FinalProject" customModuleProvider="target">
                                         <rect key="frame" x="44.5" y="0.0" width="705" height="187"/>
@@ -806,7 +802,6 @@
                     </view>
                     <connections>
                         <outlet property="questionsCollection" destination="hLF-jL-tZ8" id="Fmo-4f-h7a"/>
-                        <outlet property="spinner" destination="7x9-Da-csq" id="0vU-xa-2kj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kH8-vK-D5T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
