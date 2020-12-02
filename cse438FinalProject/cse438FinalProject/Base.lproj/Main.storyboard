@@ -683,10 +683,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="7x9-Da-csq">
-                                <rect key="frame" x="406.93688612367441" y="587.28626876785347" width="19.999999999999545" height="19.999999999999545"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hLF-jL-tZ8">
                                 <rect key="frame" x="20" y="235" width="794" height="877"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -696,6 +692,10 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="7x9-Da-csq">
+                                    <rect key="frame" x="0.0" y="0.0" width="794" height="877"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="questionCell" id="LJb-pT-DxJ" customClass="QuestionCell" customModule="cse438FinalProject" customModuleProvider="target">
                                         <rect key="frame" x="44.5" y="0.0" width="705" height="187"/>
@@ -713,13 +713,16 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KJm-Jg-JFn">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KJm-Jg-JFn">
                                                     <rect key="frame" x="255" y="10" width="445" height="38"/>
                                                     <segments>
                                                         <segment title="0"/>
                                                         <segment title="1"/>
                                                         <segment title="2"/>
                                                     </segments>
+                                                    <connections>
+                                                        <action selector="cellValueChanged:" destination="lbD-l9-6vF" eventType="valueChanged" id="6ak-UA-9Zl"/>
+                                                    </connections>
                                                 </segmentedControl>
                                                 <stackView opaque="NO" contentMode="scaleAspectFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZQ2-TW-THv">
                                                     <rect key="frame" x="255" y="52" width="445" height="130"/>

@@ -32,7 +32,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "testCategory", for: indexPath)
         
-//        cell.backgroundColor = .blue
         cell.bounds.size = CGSize(width: 800, height: 200)
         let category = UILabel(frame: CGRect(x:20, y:(1/3*cell.bounds.size.height), width:3*cell.bounds.size.width/4, height: cell.bounds.size.height/3))
         category.text = tests[indexPath.section]
@@ -68,7 +67,7 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
         
         setUpCollectionView()
-        
+
     }
     
     override func viewDidAppear(_ animated: Bool) {

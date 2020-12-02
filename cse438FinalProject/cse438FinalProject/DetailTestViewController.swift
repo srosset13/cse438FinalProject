@@ -17,21 +17,27 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "questionCell", for: indexPath) as! QuestionCell
-        print(indexPath)
         cell.crit0Label.text = allQuestions[indexPath[0]].Crit0
         cell.questionLabel.text = allQuestions[indexPath[0]].Question
         cell.crit1Label.text = allQuestions[indexPath[0]].Crit1
         cell.crit2Label.text = allQuestions[indexPath[0]].Crit2
-
         return cell
     }
-    
+
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return allQuestions.count
     }
-    
+    //updates value in 
+    @IBAction func cellValueChanged(_ sender: AnyObject) {
+        guard let cell = sender.superview?.superview as? QuestionCell else {
+            return
+        }
+        let indexPath = questionsCollection.indexPath(for: cell)
+        allQuestions[indexPath![0]].value = cell.answerBar.selectedSegmentIndex
+        print(allQuestions[indexPath![0]])
+    }
     
     @IBOutlet weak var questionsCollection: UICollectionView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -56,7 +62,7 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         }
         
     }
-    
+
     func setUpCollectionView(){
         questionsCollection.dataSource = self
         questionsCollection.delegate = self
@@ -72,7 +78,7 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
                 for document in querySnapshot!.documents {
                     let data = document.data()
 
-                    let new_question = Question(Crit0: try? data["Crit0"] as! String, Crit1: try? data["Crit1"] as! String, Crit2: try? data["Crit2"] as! String, Question: try? data["Question"] as! String, StartingPoint: "")
+                    let new_question = Question(Crit0: try? data["Crit0"] as! String, Crit1: try? data["Crit1"] as! String, Crit2: try? data["Crit2"] as! String, Question: try? data["Question"] as! String, StartingPoint: "", value: nil)
                     self.allQuestions.append(new_question)
 
                 }
