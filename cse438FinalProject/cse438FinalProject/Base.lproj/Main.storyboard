@@ -149,7 +149,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Insurance Provider" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iC-sv-A9g">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Insurance Provider:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iC-sv-A9g">
                                 <rect key="frame" x="90" y="645" width="217" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -196,11 +196,23 @@
                                     <action selector="logoutBtn:" destination="oDU-MU-nC4" eventType="touchUpInside" id="4zd-74-pFP"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8jm-T2-oxS" userLabel="Insurance">
+                                <rect key="frame" x="373" y="651" width="187" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="TnU-WS-8I7"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" id="kOI-aa-FeX"/>
+                    <connections>
+                        <outlet property="age" destination="NfO-l3-QjA" id="cR0-i8-aY0"/>
+                        <outlet property="insuranceProvider" destination="8jm-T2-oxS" id="D2w-oj-1q4"/>
+                        <outlet property="patientName" destination="BlB-xb-Zye" id="xMz-Gd-Sys"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ngs-lj-4zt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -943,7 +955,7 @@
                                     </attributedString>
                                 </state>
                                 <connections>
-                                    <action selector="createNewProfBtn:" destination="CXq-OI-Puj" eventType="touchUpInside" id="QUB-w4-hRq"/>
+                                    <action selector="createNewProfile:" destination="CXq-OI-Puj" eventType="touchUpInside" id="tda-2P-8mN"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -12,16 +12,27 @@ import FirebaseFirestore
 
 class PatientInfoViewController: UIViewController{
     
+    
+    @IBOutlet weak var patientName: UILabel!
+    @IBOutlet weak var age: UILabel!
+    @IBOutlet weak var insuranceProvider: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("LOADED")
         // ALL INFO RELATING TO LOGGED IN USER
-        // Can be placed anywherejust in here for easy access
+        // Can be placed anywhere, just in here for easy access
         let userID = UserDefaults.standard.integer(forKey: "userID")
         let insurance = UserDefaults.standard.string(forKey: "insurance")
         let name = UserDefaults.standard.string(forKey: "username")
         let docID = UserDefaults.standard.string(forKey: "docID")
         print(userID)
+        
+        //set labels to user info
+        patientName.text = name
+        //age.text =
+        insuranceProvider.text = insurance
+        
         let db = Firestore.firestore()
         //TODO look up test results
         var data = [[String:Any]]()
