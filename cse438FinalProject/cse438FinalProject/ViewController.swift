@@ -72,6 +72,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
+        print("in login")
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 
         let formattedID = Int(patientID.text ?? "")
@@ -84,19 +85,22 @@ class ViewController: UIViewController {
                     for document in querySnapshot!.documents {
                         let data = document.data()
 
-                        let attemptedPassword = try? data["Password"] as! String
-                        if (self.password.text! == attemptedPassword) {
-                            print("CORRECT CREDS")
-                            let ins = data["insurance"]
-                            let name = data["Name"]
-                            self.loggedIn = true
-                            UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
-                            UserDefaults.standard.set(formattedID!, forKey: "userID")
-                            UserDefaults.standard.set(name, forKey: "username")
-                            UserDefaults.standard.set(ins, forKey: "insurance")
-                            UserDefaults.standard.set(document.documentID, forKey: "docID")
-                            UserDefaults.standard.synchronize()
+                        //let attemptedPassword = try? data["Password"] as! String
+                        if let attemptedPassword = data["Password"] as? String{
+                            if (self.password.text! == attemptedPassword) {
+                                print("CORRECT CREDS")
+                                let ins = data["insurance"]
+                                let name = data["Name"]
+                                self.loggedIn = true
+                                UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
+                                UserDefaults.standard.set(formattedID!, forKey: "userID")
+                                UserDefaults.standard.set(name, forKey: "username")
+                                UserDefaults.standard.set(ins, forKey: "insurance")
+                                UserDefaults.standard.set(document.documentID, forKey: "docID")
+                                UserDefaults.standard.synchronize()
+                            }
                         }
+                        
                         
                         
                     }

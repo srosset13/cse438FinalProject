@@ -16,8 +16,33 @@ class NewPatientProfile: UIViewController{
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var insurance: UITextField!
+    @IBOutlet weak var dateOfBirth: UITextField!
     
+    let datePicker = UIDatePicker()
     
+    func createDatePicker(){
+        //gets current date - can use to find age
+        let today = Date()
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
+        toolbar.setItems([doneBtn], animated: true)
+        
+        dateOfBirth.inputAccessoryView = toolbar
+        dateOfBirth.inputView = datePicker
+        
+        datePicker.datePickerMode = .date
+    }
+    
+    @objc func donePressed() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        dateOfBirth.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+        
+    }
     
     @IBAction func createNewProfile(_ sender: Any) {
         
@@ -65,6 +90,7 @@ class NewPatientProfile: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        createDatePicker()
     }
     
     
