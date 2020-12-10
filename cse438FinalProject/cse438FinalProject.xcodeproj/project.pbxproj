@@ -10,6 +10,7 @@
 		39202027256AF15D00034F35 /* NewPatientProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39202026256AF15C00034F35 /* NewPatientProfile.swift */; };
 		3A9C028C25684FC70018F6B8 /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9C028B25684FC70018F6B8 /* QuestionCell.swift */; };
 		3AFAD2BB256F163400EAE5B3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3AFAD2BA256F163400EAE5B3 /* GoogleService-Info.plist */; };
+		633ED1992582E7D700BB0259 /* TestResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633ED1982582E7D700BB0259 /* TestResultsViewController.swift */; };
 		6362B656256AFD7300C425E6 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6362B655256AFD7300C425E6 /* TabBarViewController.swift */; };
 		6362B658256AFEE200C425E6 /* PatientInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6362B657256AFEE200C425E6 /* PatientInfoViewController.swift */; };
 		6362B65A256B03CD00C425E6 /* NewTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6362B659256B03CD00C425E6 /* NewTestViewController.swift */; };
@@ -32,6 +33,7 @@
 		3A9C028B25684FC70018F6B8 /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
 		3AFAD2BA256F163400EAE5B3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F25F45D771086F37846C959 /* Pods-cse438FinalProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cse438FinalProject.release.xcconfig"; path = "Target Support Files/Pods-cse438FinalProject/Pods-cse438FinalProject.release.xcconfig"; sourceTree = "<group>"; };
+		633ED1982582E7D700BB0259 /* TestResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestResultsViewController.swift; sourceTree = "<group>"; };
 		6362B655256AFD7300C425E6 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		6362B657256AFEE200C425E6 /* PatientInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientInfoViewController.swift; sourceTree = "<group>"; };
 		6362B659256B03CD00C425E6 /* NewTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTestViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				63EC9B0825636B1E00D85C86 /* AppDelegate.swift */,
 				63A5A112257452B2002E7E96 /* Test.swift */,
+				633ED1982582E7D700BB0259 /* TestResultsViewController.swift */,
 				63EC9B0A25636B1E00D85C86 /* SceneDelegate.swift */,
 				3AFAD2BA256F163400EAE5B3 /* GoogleService-Info.plist */,
 				63EC9B0C25636B1E00D85C86 /* ViewController.swift */,
@@ -249,6 +252,7 @@
 				63EC9B0B25636B1E00D85C86 /* SceneDelegate.swift in Sources */,
 				6362B658256AFEE200C425E6 /* PatientInfoViewController.swift in Sources */,
 				39202027256AF15D00034F35 /* NewPatientProfile.swift in Sources */,
+				633ED1992582E7D700BB0259 /* TestResultsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
