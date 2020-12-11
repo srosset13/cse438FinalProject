@@ -63,7 +63,8 @@ class NewPatientProfile: UIViewController{
                 "Name" : formattedName,
                 "Password": formattedPassword,
                 "PatientID" : formattedID!,
-                "insurance" : formattedInsurance
+                "insurance" : formattedInsurance,
+                "DOB": dateOfBirth.text
             ]) { err in
                 if let err = err {
                     print("Error writing document: \(err)")
@@ -74,7 +75,7 @@ class NewPatientProfile: UIViewController{
                     UserDefaults.standard.set(formattedID!, forKey: "userID")
                     UserDefaults.standard.set(formattedName, forKey: "username")
                     UserDefaults.standard.set(formattedInsurance, forKey: "insurance")
-                    //UserDefaults.standard.set(document.documentID, forKey: "docID")
+                    UserDefaults.standard.set(self.dateOfBirth.text, forKey: "DOB")
                     UserDefaults.standard.synchronize()
                 }
             }

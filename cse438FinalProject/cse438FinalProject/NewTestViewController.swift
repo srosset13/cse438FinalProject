@@ -10,13 +10,18 @@ import Foundation
 import UIKit
 import FirebaseFirestore
 
-class NewTestViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
+class NewTestViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     @IBOutlet weak var collectionView: UICollectionView!
 
     
     var tests = ["Cognitive", "Receptive Communication", "Expressive Communication", "Fine Motor", "Gross Motor"]
     
+    var tests2 = ["cognitiveQuestions", "receptiveCommunicationQuestions", "expressiveCommunicationQuestions", "fineMotorQuestions", "grossMotorQuestions"]
+    
+    var questions:[String : [Question]] = ["fineMotorQuestions": [], "cognitiveQuestions": [], "grossMotorQuestions": [], "expressiveCommunicationQuestions": [],"receptiveCommunicationQuestions": []]
+    
+    var create_test = true
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -24,37 +29,48 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return tests.count
     }
     
    
     
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "testCategory", for: indexPath)
-        
-        
-        cell.bounds.size = CGSize(width: 800, height: 200)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "testCategory", for: indexPath) as! SubcategoryTest
+        //cell.Name.text = tests[indexPath.row]
+
         let category = UILabel(frame: CGRect(x:20, y:(1/3*cell.bounds.size.height), width:3*cell.bounds.size.width/4, height: cell.bounds.size.height/3))
+        
         category.text = tests[indexPath.section]
+        
         category.adjustsFontSizeToFitWidth = true
         cell.contentView.addSubview(category)
-        
         
         return cell
 
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: 800, height: 80);
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+         return 10;
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10;
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let detailView = storyboard.instantiateViewController(withIdentifier: "detailTestView") as! DetailTestViewController
-        
-        // TODO update title on next page
-        // TODO get what test is clicked on and use that from questions dict
-        detailView.allQuestions = questions["cognitiveQuestions"] ?? []
+
+
+        detailView.allQuestions = questions[tests2[indexPath.section]] ?? []
         detailView.mainViewController = self
+        detailView.name = tests[indexPath.section]
         self.navigationController?.pushViewController(detailView, animated: true)
         
         
@@ -62,6 +78,10 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
     func onUserAction(data: [Question], key: String){
         print("DATA recieved")
         questions[key] = data
+        
+        //TODO update progress nar
+        // Check all questions are not nil
+        
     }
 
     
@@ -79,6 +99,7 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         for (key,value) in questions {
             questions[key] = []
         }
+        create_test = true
     }
     
 
@@ -96,19 +117,23 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     }
     @IBAction func newTestStarted(_ sender: Any) {
-        DispatchQueue.global().async {
-            do{
-                self.fetchQuestions()
+        if create_test {
+            DispatchQueue.global().async {
+                do{
+                    self.fetchQuestions()
+                    self.create_test = false
+                    DispatchQueue.main.async {
                 
-                DispatchQueue.main.async {
-                    
+                    }
+                }catch{
+                    print("ERROR")
                 }
-            }catch{
-                print("ERROR")
             }
         }
+
     }
-    var questions:[String : [Question]] = ["fineMotorQuestions": [], "cognitiveQuestions": [], "grossMotorQuestions": [], "expressiveCommunicationQuestions": [],"receptiveCommunicationQuestions": []]
+
+    
     func fetchQuestions(){
         let db = Firestore.firestore()
 
@@ -148,7 +173,7 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         if(collectionView != nil){
             collectionView.dataSource = self
             collectionView.delegate = self
-            collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "testCategory")
+
 
         }
                 

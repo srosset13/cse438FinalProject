@@ -96,7 +96,7 @@ class ViewController: UIViewController {
                                 UserDefaults.standard.set(formattedID!, forKey: "userID")
                                 UserDefaults.standard.set(name, forKey: "username")
                                 UserDefaults.standard.set(ins, forKey: "insurance")
-                                UserDefaults.standard.set(document.documentID, forKey: "docID")
+                                UserDefaults.standard.set(data["DOB"], forKey: "DOB")
                                 UserDefaults.standard.synchronize()
                             }
                         }

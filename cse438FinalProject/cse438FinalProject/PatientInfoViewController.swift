@@ -31,7 +31,7 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
         let userID = UserDefaults.standard.integer(forKey: "userID")
         let insurance = UserDefaults.standard.string(forKey: "insurance")
         let name = UserDefaults.standard.string(forKey: "username")
-        let docID = UserDefaults.standard.string(forKey: "docID")
+        let DOB = UserDefaults.standard.string(forKey: "DOB")
         print(userID)
         
         initialBackground.layer.cornerRadius = 120;
@@ -48,6 +48,7 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
             
             print(initialsText)
         }
+        age.text = DOB
         
         initials.text = initialsText.uppercased()
         
@@ -64,16 +65,20 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
-                    data.append(document.data())
+                    let data = document.data()
                     
+                    // TODO get all data fields from query
+                    let new_result = PatientHistory(cognitiveScore: try? data["CognitiveRaw"] as? String)
+                    self.testResults2.append(new_result)
                 }
             }
             // do stuff below once query has finished
             // data holds all test results
-            print(data)
+            self.patientHistoryCV.reloadData()
+            print(self.testResults2)
         })
     }
-    
+    var testResults2:[PatientHistory] = []
     @IBAction func logoutBtn(_ sender: Any) {
         
         // maybe remove the keys instead of setting to nil?? idk
@@ -92,7 +97,11 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
            
        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "patientHistoryCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "patientHistoryCell", for: indexPath) as! PatientHistoryCell
+        
+        // TODO set values from testResults2 to labels
+        cell.cognitiveScore.text = testResults2[indexPath.section].cognitiveScore
+        
 
 // set testDate label to date of historical tests for each cell
         

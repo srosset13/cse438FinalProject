@@ -48,6 +48,9 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
     
     var testCategory: String? = ""
     let otherVC = NewTestViewController()
+    var name:String? = ""
+    
+    @IBOutlet weak var subCategoryTitle: UILabel!
     
     override func viewDidLoad() {
 //        self.spinner.isHidden = false
@@ -57,6 +60,7 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         questionsCollection.reloadData()
+        subCategoryTitle.text = name
 
         
     }

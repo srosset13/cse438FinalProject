@@ -21,3 +21,6 @@ class PatientHistoryCell: UICollectionViewCell {
 
 }
 
+struct PatientHistory: Decodable {
+    var cognitiveScore: String?
+}
