@@ -71,6 +71,7 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         detailView.allQuestions = questions[tests2[indexPath.section]] ?? []
         detailView.mainViewController = self
         detailView.name = tests[indexPath.section]
+        detailView.keyQ = tests2[indexPath.section]
         self.navigationController?.pushViewController(detailView, animated: true)
         
         

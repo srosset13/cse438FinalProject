@@ -18,12 +18,13 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "questionCell", for: indexPath) as! QuestionCell
-        cell.crit0Label.text = allQuestions[indexPath[0]].Crit0
-        cell.questionLabel.text = allQuestions[indexPath[0]].Question
-        cell.crit1Label.text = allQuestions[indexPath[0]].Crit1
-        cell.crit2Label.text = allQuestions[indexPath[0]].Crit2
-        if(allQuestions[indexPath[0]].value != nil){
-            cell.answerBar.selectedSegmentIndex = allQuestions[indexPath[0]].value ?? 0
+        cell.crit0Label.text = allQuestions[indexPath.section].Crit0
+        cell.questionLabel.text = allQuestions[indexPath.section].Question
+        cell.crit1Label.text = allQuestions[indexPath.section].Crit1
+        cell.crit2Label.text = allQuestions[indexPath.section].Crit2
+        print(allQuestions[indexPath.section].value)
+        if(allQuestions[indexPath.section].value != nil){
+            cell.answerBar.selectedSegmentIndex = allQuestions[indexPath.section].value ?? 0
         }
         
         return cell
@@ -49,6 +50,7 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
     var testCategory: String? = ""
     let otherVC = NewTestViewController()
     var name:String? = ""
+    var keyQ:String? = ""
     
     @IBOutlet weak var subCategoryTitle: UILabel!
     
@@ -72,7 +74,7 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         
         if self.isMovingFromParent{
             // TODO pass in correct key (test name)
-            mainViewController?.onUserAction(data: allQuestions, key: "cognitiveQuestions")
+            mainViewController?.onUserAction(data: allQuestions, key: keyQ!)
 
         }
     }
