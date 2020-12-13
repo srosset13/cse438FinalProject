@@ -9,23 +9,13 @@
 import Foundation
 import UIKit
 
-class Test {
+struct Test {
     
-    var date: String
-    var patientId: String
+    var date: Date
+    var patientId: Int
     
-    var cognitive: [Int] = []
-    var receptiveCommunication: [Int] = []
-    var expressiveCommunication: [Int] = []
-    var fineMotor: [Int] = []
-    var grossMotor: [Int] = []
+    var rawFinalScores: [String:Int] = [:]
+    var calcFinalScores: [String:Int] = [:]
     
-    var finalScores: [Int] = []
-    
-    init( date: String, patientId: String) {
-        self.date = date
-        self.patientId = patientId
-        
-    }
     
 }

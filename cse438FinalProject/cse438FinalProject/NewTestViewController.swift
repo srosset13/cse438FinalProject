@@ -21,8 +21,12 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var questions:[String : [Question]] = ["fineMotorQuestions": [], "cognitiveQuestions": [], "grossMotorQuestions": [], "expressiveCommunicationQuestions": [],"receptiveCommunicationQuestions": []]
     
+    
     var create_test = true
     
+    var index: IndexPath?
+    
+    var currentTest: Test?
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
@@ -74,12 +78,15 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         detailView.keyQ = tests2[indexPath.section]
         self.navigationController?.pushViewController(detailView, animated: true)
         
+        index = indexPath
+        
         
     }
     func onUserAction(data: [Question], key: String){
         print("DATA recieved")
         questions[key] = data
         
+        updateProgress(key: key)
         //TODO update progress nar
         // Check all questions are not nil
         
@@ -94,6 +101,80 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         //unhide the nav bar??
         
         // TODO loop through all keys in questions[] and add up values and look up in chart
+        var cognitiveQuestions = 0
+        var receptiveCommunicationQuestions = 0
+        var expressiveCommunicationQuestions = 0
+        var fineMotorQuestions = 0
+        var grossMotorQuestions = 0
+        
+        for (key,value) in questions {
+            if key == "cognitiveQuestions"{
+                if let questionlist = questions[key]{
+                for question in questionlist{
+                    cognitiveQuestions = cognitiveQuestions + (question.value ?? 0)
+                }
+            }
+            }
+            if key == "receptiveCommunicationQuestions"{
+                if let questionlist = questions[key]{
+                for question in questionlist{
+                    receptiveCommunicationQuestions = receptiveCommunicationQuestions + (question.value ?? 0)
+                }
+            }
+            }
+            if key == "expressiveCommunicationQuestions"{
+                if let questionlist = questions[key]{
+                for question in questionlist{
+                    expressiveCommunicationQuestions = expressiveCommunicationQuestions + (question.value ?? 0)
+                }
+            }
+            }
+            if key == "fineMotorQuestions"{
+                if let questionlist = questions[key]{
+                for question in questionlist{
+                    fineMotorQuestions = fineMotorQuestions + (question.value ?? 0)
+                }
+            }
+            }
+            if key == "grossMotorQuestions"{
+                if let questionlist = questions[key]{
+                for question in questionlist{
+                    grossMotorQuestions = grossMotorQuestions + (question.value ?? 0)
+                }
+            }
+            }
+        }
+        
+        currentTest?.rawFinalScores["CG"] = cognitiveQuestions
+        currentTest?.rawFinalScores["RC"] = receptiveCommunicationQuestions
+        currentTest?.rawFinalScores["EC"] = expressiveCommunicationQuestions
+        currentTest?.rawFinalScores["FM"] = fineMotorQuestions
+        currentTest?.rawFinalScores["GM"] = grossMotorQuestions
+
+        
+        let db = Firestore.firestore()
+        
+        if var curr = currentTest{
+            for (key,score) in curr.rawFinalScores {
+                db.collection("GSVChart").whereField("id", isEqualTo: score).getDocuments(completion: {(querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        
+                        // TODO get all data fields from query
+                        
+                        curr.calcFinalScores[key] = data[key] as? Int
+                        
+                    }
+                }
+                // do stuff below once query has finished
+                // data holds all test results
+                print(self.currentTest)
+            })
+        }
+        }
         
         // empty all questions ... prob shouldn't do this
         // TODO prob don't reload these values each time
@@ -131,7 +212,8 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
                 }
             }
         }
-
+        currentTest?.patientId = UserDefaults.standard.integer(forKey: "userID")
+        currentTest?.date = Date()
     }
 
     
@@ -161,10 +243,33 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
             //Probably do a Cache Thing here
         }
     }
+    
+    func updateProgress(key: String){
+        
+            var counter = 0
+            if let name = questions[key] {
+                for cell in name{
+                    if cell.isFilled == true{
+                        counter = counter + 1
+                    }
+                }
+            if counter == questions[key]?.count{
+                if index != nil{
+                let cell = collectionView.cellForItem(at: index!) as! SubcategoryTest
+                
+                cell.Progress.text = "Complete"
+                cell.Progress.textColor = .green
+        }
+            }
+        }
+        
+    }
+    
 
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
 
     }
     

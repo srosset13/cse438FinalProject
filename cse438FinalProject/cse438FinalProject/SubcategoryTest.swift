@@ -13,7 +13,12 @@ class SubcategoryTest: UICollectionViewCell {
     @IBOutlet weak var Progress: UILabel!
     @IBOutlet weak var button: UIButton!
     
-    @IBAction func buttonClicked(_ sender: Any) {
+    @IBAction func buttonClicked(_ sender: Any){
         
+    }
+
+    func complete(name: String){
+        Progress.text = "Completed"
+        Progress.textColor = .green
     }
 }

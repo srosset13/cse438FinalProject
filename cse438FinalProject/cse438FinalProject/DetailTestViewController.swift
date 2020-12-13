@@ -11,7 +11,7 @@ import UIKit
 import FirebaseFirestore
 
 class DetailTestViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+        
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
@@ -26,7 +26,7 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         if(allQuestions[indexPath.section].value != nil){
             cell.answerBar.selectedSegmentIndex = allQuestions[indexPath.section].value ?? 0
         }
-        
+                        
         return cell
     }
 
@@ -41,14 +41,21 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         }
         let indexPath = questionsCollection.indexPath(for: cell)
         allQuestions[indexPath![0]].value = cell.answerBar.selectedSegmentIndex
+        
+        allQuestions[indexPath![0]].isFilled = true
+        
+        
     }
+    
+    
+
     
     @IBOutlet weak var questionsCollection: UICollectionView!
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var testCategory: String? = ""
-    let otherVC = NewTestViewController()
+//    let otherVC = NewTestViewController()
     var name:String? = ""
     var keyQ:String? = ""
     

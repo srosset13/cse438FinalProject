@@ -18,6 +18,7 @@ class QuestionCell: UICollectionViewCell {
     @IBOutlet weak var answerBar: UISegmentedControl!
 
     
+    
 }
 struct DatabaseResults {
     let questions: [Question]
@@ -30,4 +31,5 @@ struct Question: Decodable {
     let Question: String?
     let StartingPoint: String?
     var value: Int?
+    var isFilled = false
 }
