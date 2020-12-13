@@ -21,9 +21,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var questions:[String : [Question]] = ["fineMotorQuestions": [], "cognitiveQuestions": [], "grossMotorQuestions": [], "expressiveCommunicationQuestions": [],"receptiveCommunicationQuestions": []]
     
-    
-    var create_test = true
-    
     var index: IndexPath?
     
     var currentTest = Test(date: Date(), patientId: UserDefaults.standard.integer(forKey: "userID"))
@@ -37,19 +34,11 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         return tests.count
     }
     
-   
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "testCategory", for: indexPath) as! SubcategoryTest
-        //cell.Name.text = tests[indexPath.row]
-
-        let category = UILabel(frame: CGRect(x:20, y:(1/3*cell.bounds.size.height), width:3*cell.bounds.size.width/4, height: cell.bounds.size.height/3))
-        
-        category.text = tests[indexPath.section]
-        
-        category.adjustsFontSizeToFitWidth = true
-        cell.contentView.addSubview(category)
+        cell.SubcategoryName.text = tests[indexPath.section]
         
         return cell
 
@@ -87,8 +76,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         questions[key] = data
         
         updateProgress(key: key)
-        //TODO update progress nar
-        // Check all questions are not nil
         
     }
 
@@ -100,7 +87,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         //call whatever the action is for touching the collection view of this test in history
         //unhide the nav bar??
         
-        // TODO loop through all keys in questions[] and add up values and look up in chart
         var cognitiveQuestions = 0
         var receptiveCommunicationQuestions = 0
         var expressiveCommunicationQuestions = 0
@@ -150,28 +136,25 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         currentTest.rawFinalScores["EC"] = expressiveCommunicationQuestions
         currentTest.rawFinalScores["FM"] = fineMotorQuestions
         currentTest.rawFinalScores["GM"] = grossMotorQuestions
-
+        print(currentTest.rawFinalScores)
         
         let db = Firestore.firestore()
+
         var counter = 0
-        for (key,score) in currentTest.rawFinalScores {
-            
-            db.collection("GSVChart").document(String(score)).getDocument(completion: {(document, error) in
-                if let document = document, document.exists {
-                    let data = document.data()
-                    
-                    self.currentTest.calcFinalScores[key] = data?[key] as? Int
-                    
+        for (key,score) in self.currentTest.rawFinalScores {
+            db.collection("GSVChart").document(String(score)).getDocument(completion: {(querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
                 } else {
-                    print("Document does not exist")
+                    let data = querySnapshot!.data()
+                    let score = data![key] as? String
+                    self.currentTest.calcFinalScores[key] = Int(score!)
                 }
                 counter += 1
-                if (counter == 5) {
-                    print("SUBMITTING INTO DB")
-                    print(self.currentTest)
+                if (counter == 5){
                     db.collection("testResults").addDocument(data: [
                         "userID": self.currentTest.patientId,
-                       "date": self.currentTest.date,
+                        "date": self.currentTest.date,
                         "CGRaw": self.currentTest.rawFinalScores["CG"],
                         "CGGross": self.currentTest.calcFinalScores["CG"],
                         "RCRaw":self.currentTest.rawFinalScores["RC"],
@@ -184,27 +167,14 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
                         "GMGross": self.currentTest.calcFinalScores["GM"],
 
                     ])
+                    let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let testResultView = storyboard.instantiateViewController(withIdentifier: "testResults") as! TestResultsViewController
+                    testResultView.rawScores = self.currentTest.rawFinalScores
+                    testResultView.grossScores = self.currentTest.calcFinalScores
+                     self.navigationController?.pushViewController(testResultView, animated: true)
                 }
-        })
-    
-            
-
-    }
-
-        
-        
-        
-        // empty all questions ... prob shouldn't do this
-        // TODO prob don't reload these values each time
-        for (key,value) in questions {
-            questions[key] = []
+            })
         }
-        create_test = true
-        
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let testResultView = storyboard.instantiateViewController(withIdentifier: "testResults") as! TestResultsViewController
-        testResultView.scores = currentTest.rawFinalScores
-         self.navigationController?.pushViewController(testResultView, animated: true)
     }
     
 
@@ -222,91 +192,71 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     }
     @IBAction func newTestStarted(_ sender: Any) {
-        if create_test {
-            DispatchQueue.global().async {
-                do{
-                    self.fetchQuestions()
-                    self.create_test = false
-                    DispatchQueue.main.async {
-                
-                    }
-                }catch{
-                    print("ERROR")
+        for (key,value) in questions {
+            questions[key] = []
+        }
+        DispatchQueue.global().async {
+            do{
+                self.fetchQuestions()
+                DispatchQueue.main.async {
+            
                 }
+            }catch{
+                print("ERROR")
             }
         }
-
-        
-        
     }
 
-    
     func fetchQuestions(){
         let db = Firestore.firestore()
-
         for (key,value) in questions {
-            //TODO update this to the specific test
             db.collection(key).getDocuments(completion: { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
                     for document in querySnapshot!.documents {
                         let data = document.data()
-
                         let new_question = Question(Crit0: try? data["Crit0"] as! String, Crit1: try? data["Crit1"] as! String, Crit2: try? data["Crit2"] as! String, Question: try? data["Question"] as! String, StartingPoint: "", value: nil)
                         
                         self.questions[key]?.append(new_question)
-
                     }
-
                 }
-
-                print("DONE")
             })
-            
-            //Probably do a Cache Thing here
         }
     }
     
     func updateProgress(key: String){
-        
-            var counter = 0
-            if let name = questions[key] {
-                for cell in name{
-                    if cell.isFilled == true{
-                        counter = counter + 1
-                    }
+        var counter = 0
+        if let name = questions[key] {
+            for cell in name{
+                if cell.isFilled {
+                    counter = counter + 1
                 }
+            }
             if counter == questions[key]?.count{
-                if index != nil{
+                if index != nil  && questions[key]?.count != 0 {
+                    let cell = collectionView.cellForItem(at: index!) as! SubcategoryTest
+                    cell.complete()
+                }
+            } else {
                 let cell = collectionView.cellForItem(at: index!) as! SubcategoryTest
-                
-                cell.Progress.text = "Complete"
-                cell.Progress.textColor = .green
-        }
+                cell.Progress.text = "In Progress"
             }
         }
-        
     }
     
 
-    
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
-        
-
     }
     
     
     func setUpCollectionView() {
-        
         if(collectionView != nil){
             collectionView.dataSource = self
             collectionView.delegate = self
-
-
         }
-                
     }
+    
 }
 

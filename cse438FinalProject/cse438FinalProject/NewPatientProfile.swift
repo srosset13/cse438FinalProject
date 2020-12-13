@@ -45,10 +45,7 @@ class NewPatientProfile: UIViewController{
     }
     
     @IBAction func createNewProfile(_ sender: Any) {
-        
-        //write data to firestore
-        //create new user
-        
+  
         let db = Firestore.firestore()
         let formattedID = Int(patientID.text ?? "")
         let formattedPassword = String(password.text ?? "")
@@ -77,16 +74,16 @@ class NewPatientProfile: UIViewController{
                     UserDefaults.standard.set(formattedInsurance, forKey: "insurance")
                     UserDefaults.standard.set(self.dateOfBirth.text, forKey: "DOB")
                     UserDefaults.standard.synchronize()
+                    let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    
+                    let mainApp = storyboard.instantiateViewController(withIdentifier: "tabBarController");
+
+                    self.navigationController?.pushViewController(mainApp, animated: true)
                 }
             }
         }
         
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 
-        let mainApp = storyboard.instantiateViewController(withIdentifier: "tabBarController");
-
-        self.navigationController?.pushViewController(mainApp, animated: true)
-        
     }
     
     override func viewDidLoad() {

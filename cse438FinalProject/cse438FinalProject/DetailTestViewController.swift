@@ -22,7 +22,6 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         cell.questionLabel.text = allQuestions[indexPath.section].Question
         cell.crit1Label.text = allQuestions[indexPath.section].Crit1
         cell.crit2Label.text = allQuestions[indexPath.section].Crit2
-        print(allQuestions[indexPath.section].value)
         if(allQuestions[indexPath.section].value != nil){
             cell.answerBar.selectedSegmentIndex = allQuestions[indexPath.section].value ?? 0
         }
@@ -55,7 +54,6 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var testCategory: String? = ""
-//    let otherVC = NewTestViewController()
     var name:String? = ""
     var keyQ:String? = ""
     
@@ -80,9 +78,8 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         super.viewWillDisappear(animated)
         
         if self.isMovingFromParent{
-            // TODO pass in correct key (test name)
             mainViewController?.onUserAction(data: allQuestions, key: keyQ!)
-
+            
         }
     }
 

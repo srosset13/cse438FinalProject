@@ -74,7 +74,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-        print("in login")
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 
         let formattedID = Int(patientID.text ?? "")
@@ -90,7 +89,6 @@ class ViewController: UIViewController {
                         //let attemptedPassword = try? data["Password"] as! String
                         if let attemptedPassword = data["Password"] as? String{
                             if (self.password.text! == attemptedPassword) {
-                                print("CORRECT CREDS")
                                 let ins = data["insurance"]
                                 let name = data["Name"]
                                 self.loggedIn = true
@@ -102,9 +100,7 @@ class ViewController: UIViewController {
                                 UserDefaults.standard.synchronize()
                             }
                         }
-                        
-                        
-                        
+
                     }
                 }
                 if(self.loggedIn){
@@ -120,14 +116,10 @@ class ViewController: UIViewController {
                 self.loggedIn = false
             })
         }
-        
-        
 
     }
     
-   
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

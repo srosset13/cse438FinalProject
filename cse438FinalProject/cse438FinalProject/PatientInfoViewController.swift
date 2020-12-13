@@ -23,16 +23,30 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
     
     @IBOutlet weak var patientHistoryCV: UICollectionView!
     
+    func formatAge(age: String) -> String{
+        var s = age.split(separator: " ")
+        let day = s[1].replacingOccurrences(of: ",", with: "")
+        var str = "\(s[0])/\(day)/\(s[2])"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        let someDate = formatter.date(from: str)
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year,.month], from: someDate!, to: Date())
+        let year = ageComponents.year!
+        let month = ageComponents.month!
+        UserDefaults.standard.set(year, forKey: "AgeYear")
+        UserDefaults.standard.set(month, forKey: "AgeMonth")
+
+        return "\(year) Years and \(month) Months"
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("LOADED")
         // ALL INFO RELATING TO LOGGED IN USER
-        // Can be placed anywhere, just in here for easy access
         let userID = UserDefaults.standard.integer(forKey: "userID")
         let insurance = UserDefaults.standard.string(forKey: "insurance")
         let name = UserDefaults.standard.string(forKey: "username")
         let DOB = UserDefaults.standard.string(forKey: "DOB")
-        print(userID)
         
         initialBackground.layer.cornerRadius = 120;
 
@@ -48,8 +62,7 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
             
             print(initialsText)
         }
-        age.text = DOB
-        
+        age.text = formatAge(age: DOB!)
         initials.text = initialsText.uppercased()
         
         //set labels to user info
@@ -58,7 +71,6 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
         insuranceProvider.text = insurance
         
         let db = Firestore.firestore()
-        //TODO look up test results
         var data = [[String:Any]]()
         db.collection("testResults").whereField("userID", isEqualTo: userID).getDocuments(completion: {(querySnapshot, err) in
             if let err = err {
@@ -69,19 +81,17 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
                     
                     // TODO get all data fields from query
                     let new_result = PatientHistory(cognitiveScore: try? data["CognitiveRaw"] as? String)
-                    self.testResults2.append(new_result)
+                    self.patientResults.append(new_result)
                 }
             }
             // do stuff below once query has finished
             // data holds all test results
             self.patientHistoryCV.reloadData()
-            print(self.testResults2)
+            print(self.patientResults)
         })
     }
-    var testResults2:[PatientHistory] = []
+    var patientResults:[PatientHistory] = []
     @IBAction func logoutBtn(_ sender: Any) {
-        
-        // maybe remove the keys instead of setting to nil?? idk
         UserDefaults.standard.set(false, forKey: "isUserLoggedIn")
         UserDefaults.standard.set(nil, forKey: "userID")
         UserDefaults.standard.synchronize()
@@ -89,8 +99,7 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
         
     }
     
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
            return 1
        }
@@ -99,12 +108,9 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
         
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "patientHistoryCell", for: indexPath) as! PatientHistoryCell
         
-        // TODO set values from testResults2 to labels
-        cell.cognitiveScore.text = testResults2[indexPath.section].cognitiveScore
-        
-
-// set testDate label to date of historical tests for each cell
-        
+        // TODO set values from patientResults to labels
+        cell.cognitiveScore.text = patientResults[indexPath.section].cognitiveScore
+                
         
         return cell
         
