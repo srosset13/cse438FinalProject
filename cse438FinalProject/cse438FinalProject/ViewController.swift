@@ -22,7 +22,9 @@ class ViewController: UIViewController {
 
         self.navigationController?.pushViewController(newProfile, animated: true)
         // NATE INSERTING QUESTIONS TO DATABASE, PLZ IGNORE THANKS
-//        let db = Firestore.firestore()
+//         let db = Firestore.firestore()
+//        let data = db.document("GSVChart/0")
+//        print(data)
 //        let docData : [String: Any] = [
 //            "Crit0": "Uses less advanced grasp",
 //            "Crit1": "Grasps pellet using partial thumb opposition grasp",

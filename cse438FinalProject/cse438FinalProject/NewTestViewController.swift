@@ -26,7 +26,8 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var index: IndexPath?
     
-    var currentTest: Test?
+    var currentTest = Test(date: Date(), patientId: UserDefaults.standard.integer(forKey: "userID"))
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
@@ -83,7 +84,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         
     }
     func onUserAction(data: [Question], key: String){
-        print("DATA recieved")
         questions[key] = data
         
         updateProgress(key: key)
@@ -145,36 +145,54 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
         }
         
-        currentTest?.rawFinalScores["CG"] = cognitiveQuestions
-        currentTest?.rawFinalScores["RC"] = receptiveCommunicationQuestions
-        currentTest?.rawFinalScores["EC"] = expressiveCommunicationQuestions
-        currentTest?.rawFinalScores["FM"] = fineMotorQuestions
-        currentTest?.rawFinalScores["GM"] = grossMotorQuestions
+        currentTest.rawFinalScores["CG"] = cognitiveQuestions
+        currentTest.rawFinalScores["RC"] = receptiveCommunicationQuestions
+        currentTest.rawFinalScores["EC"] = expressiveCommunicationQuestions
+        currentTest.rawFinalScores["FM"] = fineMotorQuestions
+        currentTest.rawFinalScores["GM"] = grossMotorQuestions
 
         
         let db = Firestore.firestore()
-        
-        if var curr = currentTest{
-            for (key,score) in curr.rawFinalScores {
-                db.collection("GSVChart").whereField("id", isEqualTo: score).getDocuments(completion: {(querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
+        var counter = 0
+        for (key,score) in currentTest.rawFinalScores {
+            
+            db.collection("GSVChart").document(String(score)).getDocument(completion: {(document, error) in
+                if let document = document, document.exists {
+                    let data = document.data()
+                    
+                    self.currentTest.calcFinalScores[key] = data?[key] as? Int
+                    
                 } else {
-                    for document in querySnapshot!.documents {
-                        let data = document.data()
-                        
-                        // TODO get all data fields from query
-                        
-                        curr.calcFinalScores[key] = data[key] as? Int
-                        
-                    }
+                    print("Document does not exist")
                 }
-                // do stuff below once query has finished
-                // data holds all test results
-                print(self.currentTest)
-            })
-        }
-        }
+                counter += 1
+                if (counter == 5) {
+                    print("SUBMITTING INTO DB")
+                    print(self.currentTest)
+                    db.collection("testResults").addDocument(data: [
+                        "userID": self.currentTest.patientId,
+                       "date": self.currentTest.date,
+                        "CGRaw": self.currentTest.rawFinalScores["CG"],
+                        "CGGross": self.currentTest.calcFinalScores["CG"],
+                        "RCRaw":self.currentTest.rawFinalScores["RC"],
+                        "RCGross": self.currentTest.calcFinalScores["RC"],
+                        "ECRaw": self.currentTest.rawFinalScores["EC"],
+                        "ECGross": self.currentTest.calcFinalScores["EC"],
+                        "FMRaw": self.currentTest.rawFinalScores["FM"],
+                        "FMGross": self.currentTest.calcFinalScores["FM"],
+                        "GMRaw": self.currentTest.rawFinalScores["GM"],
+                        "GMGross": self.currentTest.calcFinalScores["GM"],
+
+                    ])
+                }
+        })
+    
+            
+
+    }
+
+        
+        
         
         // empty all questions ... prob shouldn't do this
         // TODO prob don't reload these values each time
@@ -182,6 +200,11 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
             questions[key] = []
         }
         create_test = true
+        
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let testResultView = storyboard.instantiateViewController(withIdentifier: "testResults") as! TestResultsViewController
+        testResultView.scores = currentTest.rawFinalScores
+         self.navigationController?.pushViewController(testResultView, animated: true)
     }
     
 
@@ -212,8 +235,9 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
                 }
             }
         }
-        currentTest?.patientId = UserDefaults.standard.integer(forKey: "userID")
-        currentTest?.date = Date()
+
+        
+        
     }
 
     
