@@ -22,5 +22,15 @@ class PatientHistoryCell: UICollectionViewCell {
 }
 
 struct PatientHistory: Decodable {
-    var cognitiveScore: String?
+    var CGRaw: Int?
+    var CGGross: Int?
+    var RCRaw: Int?
+    var RCGross: Int?
+    var ECRaw: Int?
+    var ECGross: Int?
+    var FMRaw: Int?
+    var FMGross: Int?
+    var GMRaw: Int?
+    var GMGross: Int?
+    var date: String?
 }

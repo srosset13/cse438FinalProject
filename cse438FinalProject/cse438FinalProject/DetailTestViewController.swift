@@ -45,8 +45,6 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         
         
     }
-    
-    
 
     
     @IBOutlet weak var questionsCollection: UICollectionView!

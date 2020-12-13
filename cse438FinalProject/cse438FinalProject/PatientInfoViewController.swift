@@ -11,9 +11,6 @@ import UIKit
 import FirebaseFirestore
 
 class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
-   
-    
-    
     
     @IBOutlet weak var patientName: UILabel!
     @IBOutlet weak var age: UILabel!
@@ -42,6 +39,9 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        patientHistoryCV.delegate = self
+        patientHistoryCV.dataSource = self
         // ALL INFO RELATING TO LOGGED IN USER
         let userID = UserDefaults.standard.integer(forKey: "userID")
         let insurance = UserDefaults.standard.string(forKey: "insurance")
@@ -53,21 +53,17 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
         var initialsText = ""
                 
         initialsText = String(name?.first ?? " ")
-        
-        print(initialsText)
-        
+                
         if(name?.contains(" ") == true){
             var lastName = name?.components(separatedBy: " ").last
             initialsText = initialsText + String(lastName?.first ?? " ")
-            
-            print(initialsText)
         }
-        age.text = formatAge(age: DOB!)
+        
         initials.text = initialsText.uppercased()
         
         //set labels to user info
         patientName.text = name
-        //age.text =
+        age.text = formatAge(age: DOB!)
         insuranceProvider.text = insurance
         
         let db = Firestore.firestore()
@@ -78,16 +74,31 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
             } else {
                 for document in querySnapshot!.documents {
                     let data = document.data()
-                    
+                    let d = data["date"] as! Timestamp
+                    let day = d.dateValue()
+                    let formatter1 = DateFormatter()
+                    formatter1.dateStyle = .short
+                    let formattedDate = formatter1.string(from: day)
                     // TODO get all data fields from query
-                    let new_result = PatientHistory(cognitiveScore: try? data["CognitiveRaw"] as? String)
+                    let new_result = PatientHistory(
+                        CGRaw: data["CGRaw"] as! Int,
+                        CGGross: data["CGGross"] as! Int,
+                        RCRaw: data["RCRaw"] as! Int,
+                        RCGross: data["RCGross"] as! Int,
+                        ECRaw: data["ECRaw"] as! Int,
+                        ECGross: data["ECGross"] as! Int,
+                        FMRaw: data["FMRaw"] as! Int,
+                        FMGross: data["FMGross"] as! Int,
+                        GMRaw: data["GMRaw"] as! Int,
+                        GMGross: data["GMGross"] as! Int,
+                        date: formattedDate
+                        )
                     self.patientResults.append(new_result)
                 }
             }
             // do stuff below once query has finished
             // data holds all test results
             self.patientHistoryCV.reloadData()
-            print(self.patientResults)
         })
     }
     var patientResults:[PatientHistory] = []
@@ -104,27 +115,32 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
            return 1
        }
            
-       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "patientHistoryCell", for: indexPath) as! PatientHistoryCell
-        
-        // TODO set values from patientResults to labels
-        cell.cognitiveScore.text = patientResults[indexPath.section].cognitiveScore
-                
-        
-        return cell
-        
-       }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let detailView = storyboard.instantiateViewController(withIdentifier: "testResults") as! TestResultsViewController
-        
-        // TODO update title on next page
-        // TODO get what test is clicked on and use that from questions dict
-        
-//        detailView.mainViewController = self
-        self.navigationController?.pushViewController(detailView, animated: true)
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return patientResults.count
     }
+   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "patientHistoryCell", for: indexPath) as! PatientHistoryCell
+    
+    cell.cognitiveScore.text = String(patientResults[indexPath.section].CGRaw!)
+    cell.receptiveScore.text = String(patientResults[indexPath.section].RCRaw!)
+    cell.expressiveScore.text = String(patientResults[indexPath.section].ECRaw!)
+    cell.fineMotorScore.text = String(patientResults[indexPath.section].FMRaw!)
+    cell.grossMotorScore.text = String(patientResults[indexPath.section].GMRaw!)
+    cell.dateLabel.setTitle(patientResults[indexPath.section].date, for: .normal)
+    return cell
+    
+   }
+
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let detailView = storyboard.instantiateViewController(withIdentifier: "testResults") as! TestResultsViewController
+//
+//        // TODO update title on next page
+//        // TODO get what test is clicked on and use that from questions dict
+//
+////        detailView.mainViewController = self
+//        self.navigationController?.pushViewController(detailView, animated: true)
+//    }
     
 }

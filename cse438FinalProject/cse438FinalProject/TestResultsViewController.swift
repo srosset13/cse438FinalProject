@@ -53,6 +53,9 @@ class TestResultsViewController: UIViewController, UICollectionViewDelegate, UIC
      }
     
     @IBAction func exportResults(_ sender: Any) {
+        // TODO bring back to patient history view
+        // TODO screenshot info and save to user photos
+        
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.setToRecipients(["nostdiek1@gmail.com"])
