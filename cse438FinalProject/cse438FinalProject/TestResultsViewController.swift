@@ -72,8 +72,6 @@ class TestResultsViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     @IBAction func exportResults(_ sender: Any) {
-        
-        
         //Create the UIImage
         let renderer = UIGraphicsImageRenderer(size: view.frame.size)
         let image = renderer.image(actions: { context in
@@ -83,25 +81,6 @@ class TestResultsViewController: UIViewController, UICollectionViewDelegate, UIC
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         
         sendAlert(title: "Saved", message: "Results have been successfully saved to photo library")
-        
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.setToRecipients(["nostdiek1@gmail.com"])
-            mail.setSubject("Bayley Test Results")
-            mail.setMessageBody("Hi", isHTML: true)
-            mail.mailComposeDelegate = self
-//            if let filePath = Bundle.main.path(forResource: "sampleData", ofType: "json") {
-//               if let data = NSData(contentsOfFile: filePath) {
-//                  mail.addAttachmentData(data as Data, mimeType: "application/json" , fileName: "sampleData.json")
-//               }
-//            }
-            present(mail, animated: true)
-         }
-         else {
-            print("Email cannot be sent")
-         }
-        
-        
     }
     
 }

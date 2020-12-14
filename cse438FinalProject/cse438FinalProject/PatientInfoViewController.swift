@@ -107,10 +107,8 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
         UserDefaults.standard.set(nil, forKey: "userID")
         UserDefaults.standard.synchronize()
         self.navigationController?.popToRootViewController(animated: true)
-        
     }
     
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
            return 1
        }
@@ -131,16 +129,5 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
     return cell
     
    }
-
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let detailView = storyboard.instantiateViewController(withIdentifier: "testResults") as! TestResultsViewController
-//
-//        // TODO update title on next page
-//        // TODO get what test is clicked on and use that from questions dict
-//
-////        detailView.mainViewController = self
-//        self.navigationController?.pushViewController(detailView, animated: true)
-//    }
     
 }

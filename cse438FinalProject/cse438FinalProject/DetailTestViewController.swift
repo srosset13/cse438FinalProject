@@ -33,7 +33,7 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return allQuestions.count
     }
-    //updates value in 
+    
     @IBAction func cellValueChanged(_ sender: AnyObject) {
         guard let cell = sender.superview?.superview as? QuestionCell else {
             return
@@ -42,11 +42,8 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         allQuestions[indexPath![0]].value = cell.answerBar.selectedSegmentIndex
         
         allQuestions[indexPath![0]].isFilled = true
-        
-        
     }
 
-    
     @IBOutlet weak var questionsCollection: UICollectionView!
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -58,17 +55,14 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var subCategoryTitle: UILabel!
     
     override func viewDidLoad() {
-//        self.spinner.isHidden = false
-        
         setUpCollectionView()
         super.viewDidLoad()
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         questionsCollection.reloadData()
         subCategoryTitle.text = name
-
-        
     }
+    
     var mainViewController: NewTestViewController?
     var allQuestions: [Question] = []
     
@@ -85,7 +79,5 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         questionsCollection.dataSource = self
         questionsCollection.delegate = self
     }
-    
-    
     
 }

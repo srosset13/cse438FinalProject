@@ -41,7 +41,6 @@ class NewPatientProfile: UIViewController{
         formatter.timeStyle = .none
         dateOfBirth.text = formatter.string(from: datePicker.date)
         self.view.endEditing(true)
-        
     }
     
     @IBAction func backBtn(_ sender: Any) {
@@ -51,7 +50,6 @@ class NewPatientProfile: UIViewController{
     }
     
     @IBAction func createNewProfile(_ sender: Any) {
-  
         let db = Firestore.firestore()
         let formattedID = Int(patientID.text ?? "")
         let formattedPassword = String(password.text ?? "")
@@ -59,9 +57,6 @@ class NewPatientProfile: UIViewController{
         let formattedInsurance = String(insurance.text ?? "")
 
         if(formattedID != nil){
-            //check to see if patientID has already been registered. If so, do not create a new account
-            
-            //if the patientID does not exist yet in the database, create a new account:
             db.collection("patients").addDocument(data: [
                 "Name" : formattedName,
                 "Password": formattedPassword,
@@ -88,15 +83,11 @@ class NewPatientProfile: UIViewController{
                 }
             }
         }
-        
-
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createDatePicker()
     }
-    
-    
     
 }

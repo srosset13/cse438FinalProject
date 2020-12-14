@@ -17,8 +17,6 @@ class QuestionCell: UICollectionViewCell {
     @IBOutlet weak var crit2Label: UILabel!
     @IBOutlet weak var answerBar: UISegmentedControl!
 
-    
-    
 }
 struct DatabaseResults {
     let questions: [Question]

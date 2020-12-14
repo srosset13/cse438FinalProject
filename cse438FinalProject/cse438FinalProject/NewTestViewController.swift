@@ -14,7 +14,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var collectionView: UICollectionView!
 
-    
     var tests = ["Cognitive", "Receptive Communication", "Expressive Communication", "Fine Motor", "Gross Motor"]
     
     var tests2 = ["cognitiveQuestions", "receptiveCommunicationQuestions", "expressiveCommunicationQuestions", "fineMotorQuestions", "grossMotorQuestions"]
@@ -25,7 +24,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     var currentTest = Test(date: Date(), patientId: UserDefaults.standard.integer(forKey: "userID"))
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
@@ -34,15 +32,14 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         return tests.count
     }
     
-
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "testCategory", for: indexPath) as! SubcategoryTest
         cell.SubcategoryName.text = tests[indexPath.section]
         
         return cell
-
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSize(width: 800, height: 80);
     }
@@ -55,12 +52,10 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         return 10;
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let detailView = storyboard.instantiateViewController(withIdentifier: "detailTestView") as! DetailTestViewController
-
 
         detailView.allQuestions = questions[tests2[indexPath.section]] ?? []
         detailView.mainViewController = self
@@ -69,23 +64,16 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.navigationController?.pushViewController(detailView, animated: true)
         
         index = indexPath
-        
-        
     }
     func onUserAction(data: [Question], key: String){
         questions[key] = data
         
         updateProgress(key: key)
-        
     }
 
-    
     @IBAction func submitTestBtn(_ sender: UIButton) {
         
         tabBarController?.selectedIndex = 1
-        //update collection view in history
-        //call whatever the action is for touching the collection view of this test in history
-        //unhide the nav bar??
         
         var cognitiveQuestions = 0
         var receptiveCommunicationQuestions = 0
@@ -96,38 +84,38 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         for (key,value) in questions {
             if key == "cognitiveQuestions"{
                 if let questionlist = questions[key]{
-                for question in questionlist{
-                    cognitiveQuestions = cognitiveQuestions + (question.value ?? 0)
+                    for question in questionlist{
+                        cognitiveQuestions = cognitiveQuestions + (question.value ?? 0)
+                    }
                 }
-            }
             }
             if key == "receptiveCommunicationQuestions"{
                 if let questionlist = questions[key]{
-                for question in questionlist{
-                    receptiveCommunicationQuestions = receptiveCommunicationQuestions + (question.value ?? 0)
+                    for question in questionlist{
+                        receptiveCommunicationQuestions = receptiveCommunicationQuestions + (question.value ?? 0)
+                    }
                 }
-            }
             }
             if key == "expressiveCommunicationQuestions"{
                 if let questionlist = questions[key]{
-                for question in questionlist{
-                    expressiveCommunicationQuestions = expressiveCommunicationQuestions + (question.value ?? 0)
+                    for question in questionlist{
+                        expressiveCommunicationQuestions = expressiveCommunicationQuestions + (question.value ?? 0)
+                    }
                 }
-            }
             }
             if key == "fineMotorQuestions"{
                 if let questionlist = questions[key]{
-                for question in questionlist{
-                    fineMotorQuestions = fineMotorQuestions + (question.value ?? 0)
+                    for question in questionlist{
+                        fineMotorQuestions = fineMotorQuestions + (question.value ?? 0)
+                    }
                 }
-            }
             }
             if key == "grossMotorQuestions"{
                 if let questionlist = questions[key]{
-                for question in questionlist{
-                    grossMotorQuestions = grossMotorQuestions + (question.value ?? 0)
+                    for question in questionlist{
+                        grossMotorQuestions = grossMotorQuestions + (question.value ?? 0)
+                    }
                 }
-            }
             }
         }
         
@@ -165,7 +153,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
                         "FMGross": self.currentTest.calcFinalScores["FM"],
                         "GMRaw": self.currentTest.rawFinalScores["GM"],
                         "GMGross": self.currentTest.calcFinalScores["GM"],
-
                     ])
                     let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let testResultView = storyboard.instantiateViewController(withIdentifier: "testResults") as! TestResultsViewController
@@ -176,7 +163,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
             })
         }
     }
-    
 
     var fineMotorQuestions = [Question]()
     var cognitiveQuestions = [Question]()
@@ -189,7 +175,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         setUpCollectionView()
 
-
     }
     @IBAction func newTestStarted(_ sender: Any) {
         for (key,value) in questions {
@@ -199,11 +184,10 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
             do{
                 self.fetchQuestions()
                 DispatchQueue.main.async {
-            
                 }
-            }catch{
-                print("ERROR")
-            }
+                }catch{
+                    print("ERROR")
+                }
         }
     }
 
@@ -249,7 +233,6 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
     
     func setUpCollectionView() {
         if(collectionView != nil){

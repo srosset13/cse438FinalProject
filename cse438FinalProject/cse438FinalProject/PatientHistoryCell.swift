@@ -17,8 +17,6 @@ class PatientHistoryCell: UICollectionViewCell {
     @IBOutlet weak var expressiveScore: UILabel!
     @IBOutlet weak var fineMotorScore: UILabel!
     @IBOutlet weak var grossMotorScore: UILabel!
-    
-
 }
 
 struct PatientHistory: Decodable {

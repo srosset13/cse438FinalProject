@@ -11,11 +11,4 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
-//    @IBAction func logoutBtn(_ sender: Any) {
-//        
-//       
-//    }
-    
-    
-    
 }
