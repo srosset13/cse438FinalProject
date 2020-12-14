@@ -16,9 +16,9 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     var tests = ["Cognitive", "Receptive Communication", "Expressive Communication", "Fine Motor", "Gross Motor"]
     
-    var tests2 = ["cognitiveQuestions", "receptiveCommunicationQuestions", "expressiveCommunicationQuestions", "fineMotorQuestions", "grossMotorQuestions"]
+    var tests2 = ["cognitiveQuestions", "receptiveCommunicationQuestions", "expressiveCommunicationQuestions", "finalMotorQuestions2", "grossMotorQuestions"]
     
-    var questions:[String : [Question]] = ["fineMotorQuestions": [], "cognitiveQuestions": [], "grossMotorQuestions": [], "expressiveCommunicationQuestions": [],"receptiveCommunicationQuestions": []]
+    var questions:[String : [Question]] = ["finalMotorQuestions2": [], "cognitiveQuestions": [], "grossMotorQuestions": [], "expressiveCommunicationQuestions": [],"receptiveCommunicationQuestions": []]
     
     var index: IndexPath?
     
@@ -40,7 +40,7 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    private func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSize(width: 800, height: 80);
     }
 
@@ -81,7 +81,7 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
         var fineMotorQuestions = 0
         var grossMotorQuestions = 0
         
-        for (key,value) in questions {
+        for (key,_) in questions {
             if key == "cognitiveQuestions"{
                 if let questionlist = questions[key]{
                     for question in questionlist{
@@ -103,7 +103,7 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
                     }
                 }
             }
-            if key == "fineMotorQuestions"{
+            if key == "finalMotorQuestions2"{
                 if let questionlist = questions[key]{
                     for question in questionlist{
                         fineMotorQuestions = fineMotorQuestions + (question.value ?? 0)
@@ -143,16 +143,16 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
                     db.collection("testResults").addDocument(data: [
                         "userID": self.currentTest.patientId,
                         "date": self.currentTest.date,
-                        "CGRaw": self.currentTest.rawFinalScores["CG"],
-                        "CGGross": self.currentTest.calcFinalScores["CG"],
-                        "RCRaw":self.currentTest.rawFinalScores["RC"],
-                        "RCGross": self.currentTest.calcFinalScores["RC"],
-                        "ECRaw": self.currentTest.rawFinalScores["EC"],
-                        "ECGross": self.currentTest.calcFinalScores["EC"],
-                        "FMRaw": self.currentTest.rawFinalScores["FM"],
-                        "FMGross": self.currentTest.calcFinalScores["FM"],
-                        "GMRaw": self.currentTest.rawFinalScores["GM"],
-                        "GMGross": self.currentTest.calcFinalScores["GM"],
+                        "CGRaw": self.currentTest.rawFinalScores["CG"] as Any,
+                        "CGGross": self.currentTest.calcFinalScores["CG"] as Any,
+                        "RCRaw":self.currentTest.rawFinalScores["RC"] as Any,
+                        "RCGross": self.currentTest.calcFinalScores["RC"] as Any,
+                        "ECRaw": self.currentTest.rawFinalScores["EC"] as Any,
+                        "ECGross": self.currentTest.calcFinalScores["EC"] as Any,
+                        "FMRaw": self.currentTest.rawFinalScores["FM"] as Any,
+                        "FMGross": self.currentTest.calcFinalScores["FM"] as Any,
+                        "GMRaw": self.currentTest.rawFinalScores["GM"] as Any,
+                        "GMGross": self.currentTest.calcFinalScores["GM"] as Any,
                     ])
                     let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let testResultView = storyboard.instantiateViewController(withIdentifier: "testResults") as! TestResultsViewController
@@ -177,30 +177,33 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     }
     @IBAction func newTestStarted(_ sender: Any) {
-        for (key,value) in questions {
+        for (key,_) in questions {
             questions[key] = []
+            if index != nil{
+                let cell = collectionView.cellForItem(at: index!) as! SubcategoryTest
+                cell.Progress.text = "Not Started"
+            }
+            
         }
         DispatchQueue.global().async {
             do{
                 self.fetchQuestions()
                 DispatchQueue.main.async {
                 }
-                }catch{
-                    print("ERROR")
                 }
         }
     }
 
     func fetchQuestions(){
         let db = Firestore.firestore()
-        for (key,value) in questions {
+        for (key,_) in questions {
             db.collection(key).getDocuments(completion: { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
                     for document in querySnapshot!.documents {
                         let data = document.data()
-                        let new_question = Question(Crit0: try? data["Crit0"] as! String, Crit1: try? data["Crit1"] as! String, Crit2: try? data["Crit2"] as! String, Question: try? data["Question"] as! String, StartingPoint: "", value: nil)
+                        let new_question = Question(Crit0: data["Crit0"] as? String, Crit1: data["Crit1"] as? String, Crit2: data["Crit2"] as? String, Question: data["Question"] as? String, StartingPoint: "", value: nil)
                         
                         self.questions[key]?.append(new_question)
                     }

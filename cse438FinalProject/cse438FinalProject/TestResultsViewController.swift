@@ -39,7 +39,7 @@ class TestResultsViewController: UIViewController, UICollectionViewDelegate, UIC
          return cell
 
      }
-     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    private func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
          return CGSize(width: 800, height: 80);
      }
 

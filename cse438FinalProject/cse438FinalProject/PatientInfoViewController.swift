@@ -21,9 +21,9 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
     @IBOutlet weak var patientHistoryCV: UICollectionView!
     
     func formatAge(age: String) -> String{
-        var s = age.split(separator: " ")
+        let s = age.split(separator: " ")
         let day = s[1].replacingOccurrences(of: ",", with: "")
-        var str = "\(s[0])/\(day)/\(s[2])"
+        let str = "\(s[0])/\(day)/\(s[2])"
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
         let someDate = formatter.date(from: str)
@@ -55,7 +55,7 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
         initialsText = String(name?.first ?? " ")
                 
         if(name?.contains(" ") == true){
-            var lastName = name?.components(separatedBy: " ").last
+            let lastName = name?.components(separatedBy: " ").last
             initialsText = initialsText + String(lastName?.first ?? " ")
         }
         
@@ -67,13 +67,13 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
         insuranceProvider.text = insurance
         
         let db = Firestore.firestore()
-        var data = [[String:Any]]()
+        var data = [String:Any]()
         db.collection("testResults").whereField("userID", isEqualTo: userID).getDocuments(completion: {(querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
-                    let data = document.data()
+                    data = document.data()
                     let d = data["date"] as! Timestamp
                     let day = d.dateValue()
                     let formatter1 = DateFormatter()
@@ -81,16 +81,16 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
                     let formattedDate = formatter1.string(from: day)
                     // TODO get all data fields from query
                     let new_result = PatientHistory(
-                        CGRaw: data["CGRaw"] as! Int,
-                        CGGross: data["CGGross"] as! Int,
-                        RCRaw: data["RCRaw"] as! Int,
-                        RCGross: data["RCGross"] as! Int,
-                        ECRaw: data["ECRaw"] as! Int,
-                        ECGross: data["ECGross"] as! Int,
-                        FMRaw: data["FMRaw"] as! Int,
-                        FMGross: data["FMGross"] as! Int,
-                        GMRaw: data["GMRaw"] as! Int,
-                        GMGross: data["GMGross"] as! Int,
+                        CGRaw: data["CGRaw"] as? Int,
+                        CGGross: data["CGGross"] as? Int,
+                        RCRaw: data["RCRaw"] as? Int,
+                        RCGross: data["RCGross"] as? Int,
+                        ECRaw: data["ECRaw"] as? Int,
+                        ECGross: data["ECGross"] as? Int,
+                        FMRaw: data["FMRaw"] as? Int,
+                        FMGross: data["FMGross"] as? Int,
+                        GMRaw: data["GMRaw"] as? Int,
+                        GMGross: data["GMGross"] as? Int,
                         date: formattedDate
                         )
                     self.patientResults.append(new_result)

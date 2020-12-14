@@ -21,8 +21,6 @@ class NewPatientProfile: UIViewController{
     let datePicker = UIDatePicker()
     
     func createDatePicker(){
-        //gets current date - can use to find age
-        let today = Date()
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
@@ -62,7 +60,7 @@ class NewPatientProfile: UIViewController{
                 "Password": formattedPassword,
                 "PatientID" : formattedID!,
                 "insurance" : formattedInsurance,
-                "DOB": dateOfBirth.text
+                "DOB": dateOfBirth.text as Any
             ]) { err in
                 if let err = err {
                     print("Error writing document: \(err)")
