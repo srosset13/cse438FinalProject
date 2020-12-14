@@ -667,8 +667,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hLF-jL-tZ8">
-                                <rect key="frame" x="20" y="269" width="794" height="843"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hLF-jL-tZ8">
+                                <rect key="frame" x="20" y="190" width="794" height="922"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2Lz-3x-ScJ">
                                     <size key="itemSize" width="705" height="187"/>
@@ -757,8 +757,8 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VPt-fg-v9b">
-                                <rect key="frame" x="20" y="125" width="794" height="92"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VPt-fg-v9b">
+                                <rect key="frame" x="20" y="40" width="794" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Reflexes Test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jR1-cI-MtG">
                                         <rect key="frame" x="156" y="25" width="482" height="42"/>
@@ -769,17 +769,19 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.48798378479999999" green="0.91402976650000001" blue="0.32984225560000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="6Qw-nE-xya"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="VPt-fg-v9b" firstAttribute="trailing" secondItem="hLF-jL-tZ8" secondAttribute="trailing" id="4hh-8b-OGW"/>
-                            <constraint firstItem="hLF-jL-tZ8" firstAttribute="top" secondItem="VPt-fg-v9b" secondAttribute="bottom" constant="68" id="Ani-fH-XU1"/>
-                            <constraint firstItem="VPt-fg-v9b" firstAttribute="top" secondItem="Q6g-Yg-beb" secondAttribute="top" constant="75" id="GAP-qF-JfA"/>
+                            <constraint firstItem="hLF-jL-tZ8" firstAttribute="top" secondItem="VPt-fg-v9b" secondAttribute="bottom" constant="60" id="Ani-fH-XU1"/>
+                            <constraint firstItem="VPt-fg-v9b" firstAttribute="top" secondItem="Q6g-Yg-beb" secondAttribute="top" constant="40" id="GAP-qF-JfA"/>
                             <constraint firstItem="Q6g-Yg-beb" firstAttribute="bottom" secondItem="hLF-jL-tZ8" secondAttribute="bottom" constant="62" id="aND-JN-hNV"/>
                             <constraint firstItem="VPt-fg-v9b" firstAttribute="leading" secondItem="hLF-jL-tZ8" secondAttribute="leading" id="l5o-8N-REz"/>
                             <constraint firstItem="hLF-jL-tZ8" firstAttribute="leading" secondItem="Q6g-Yg-beb" secondAttribute="leading" constant="20" id="pQI-73-Egs"/>
-                            <constraint firstAttribute="bottom" secondItem="VPt-fg-v9b" secondAttribute="bottom" constant="1027" id="wNU-Hn-a6o"/>
                             <constraint firstItem="Q6g-Yg-beb" firstAttribute="trailing" secondItem="hLF-jL-tZ8" secondAttribute="trailing" constant="20" id="ynK-li-Qq1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Q6g-Yg-beb"/>

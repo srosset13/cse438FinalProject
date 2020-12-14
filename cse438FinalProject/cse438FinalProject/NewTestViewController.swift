@@ -16,9 +16,9 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     var tests = ["Cognitive", "Receptive Communication", "Expressive Communication", "Fine Motor", "Gross Motor"]
     
-    var tests2 = ["cognitiveQuestions", "receptiveCommunicationQuestions", "expressiveCommunicationQuestions", "finalMotorQuestions2", "grossMotorQuestions"]
+    var tests2 = ["cognitiveQuestions", "receptiveCommunicationQuestions", "expressiveCommunicationQuestions", "fineMotorQuestions", "grossMotorQuestions"]
     
-    var questions:[String : [Question]] = ["finalMotorQuestions2": [], "cognitiveQuestions": [], "grossMotorQuestions": [], "expressiveCommunicationQuestions": [],"receptiveCommunicationQuestions": []]
+    var questions:[String : [Question]] = ["fineMotorQuestions": [], "cognitiveQuestions": [], "grossMotorQuestions": [], "expressiveCommunicationQuestions": [],"receptiveCommunicationQuestions": []]
     
     var index: IndexPath?
     
@@ -103,7 +103,7 @@ class NewTestViewController: UIViewController, UICollectionViewDelegate, UIColle
                     }
                 }
             }
-            if key == "finalMotorQuestions2"{
+            if key == "fineMotorQuestions"{
                 if let questionlist = questions[key]{
                     for question in questionlist{
                         fineMotorQuestions = fineMotorQuestions + (question.value ?? 0)

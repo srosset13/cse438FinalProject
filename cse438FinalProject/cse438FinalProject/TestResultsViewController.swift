@@ -63,7 +63,6 @@ class TestResultsViewController: UIViewController, UICollectionViewDelegate, UIC
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
-            // TODO bring back to patient history view
             let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let mainApp = storyboard.instantiateViewController(withIdentifier: "tabBarController");
             self.navigationController?.pushViewController(mainApp, animated: true)

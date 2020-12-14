@@ -79,7 +79,6 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
                     let formatter1 = DateFormatter()
                     formatter1.dateStyle = .short
                     let formattedDate = formatter1.string(from: day)
-                    // TODO get all data fields from query
                     let new_result = PatientHistory(
                         CGRaw: data["CGRaw"] as? Int,
                         CGGross: data["CGGross"] as? Int,
@@ -98,6 +97,7 @@ class PatientInfoViewController: UIViewController, UICollectionViewDelegate, UIC
             }
             // do stuff below once query has finished
             // data holds all test results
+
             self.patientHistoryCV.reloadData()
         })
     }

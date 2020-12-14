@@ -22,10 +22,8 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         cell.questionLabel.text = allQuestions[indexPath.section].Question
         cell.crit1Label.text = allQuestions[indexPath.section].Crit1
         cell.crit2Label.text = allQuestions[indexPath.section].Crit2
-        if(allQuestions[indexPath.section].value != nil){
-            cell.answerBar.selectedSegmentIndex = allQuestions[indexPath.section].value ?? 0
-        }
-                        
+        cell.answerBar.selectedSegmentIndex = allQuestions[indexPath.section].value ?? -1
+
         return cell
     }
 
@@ -40,7 +38,6 @@ class DetailTestViewController: UIViewController, UICollectionViewDataSource, UI
         }
         let indexPath = questionsCollection.indexPath(for: cell)
         allQuestions[indexPath![0]].value = cell.answerBar.selectedSegmentIndex
-        
         allQuestions[indexPath![0]].isFilled = true
     }
 
