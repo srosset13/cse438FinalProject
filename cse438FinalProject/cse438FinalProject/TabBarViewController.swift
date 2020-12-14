@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TabBarViewController: UITabBarController{
+class TabBarViewController: UITabBarController {
     
 //    @IBAction func logoutBtn(_ sender: Any) {
 //        

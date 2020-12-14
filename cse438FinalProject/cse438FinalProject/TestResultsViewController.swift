@@ -10,13 +10,12 @@ import Foundation
 import UIKit
 import MessageUI
 
-class TestResultsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MFMailComposeViewControllerDelegate {
+class TestResultsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MFMailComposeViewControllerDelegate, UIImagePickerControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        
     }
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -33,7 +32,7 @@ class TestResultsViewController: UIViewController, UICollectionViewDelegate, UIC
     var tests2 = ["CG", "RC", "EC", "FM", "GM"]
      
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "testResults", for: indexPath) as! testResultsCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "testResults", for: indexPath) as! testResultsCell
         cell.SubcategoryName.text = tests[indexPath.section]
         cell.rawScoreLabel.text = "Raw Score: \(rawScores[tests2[indexPath.section]]!)"
         cell.grossScoreLabel.text = "Gross Score: \(grossScores[tests2[indexPath.section]]!)"
@@ -51,10 +50,39 @@ class TestResultsViewController: UIViewController, UICollectionViewDelegate, UIC
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
          return 10;
      }
+        
+    
+    @IBAction func backBtn(_ sender: Any) {
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainApp = storyboard.instantiateViewController(withIdentifier: "tabBarController");
+        self.navigationController?.pushViewController(mainApp, animated: true)
+    }
+    
+    
+    func sendAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            // TODO bring back to patient history view
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let mainApp = storyboard.instantiateViewController(withIdentifier: "tabBarController");
+            self.navigationController?.pushViewController(mainApp, animated: true)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     @IBAction func exportResults(_ sender: Any) {
-        // TODO bring back to patient history view
-        // TODO screenshot info and save to user photos
+        
+        
+        //Create the UIImage
+        let renderer = UIGraphicsImageRenderer(size: view.frame.size)
+        let image = renderer.image(actions: { context in
+            view.layer.render(in: context.cgContext)
+        })
+        //Save it to the camera roll
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        
+        sendAlert(title: "Saved", message: "Results have been successfully saved to photo library")
         
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
@@ -72,5 +100,8 @@ class TestResultsViewController: UIViewController, UICollectionViewDelegate, UIC
          else {
             print("Email cannot be sent")
          }
+        
+        
     }
+    
 }

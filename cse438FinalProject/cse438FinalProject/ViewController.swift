@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var patientID: UITextField!
     @IBOutlet weak var password: UITextField!
+    
     var loggedIn = false
     
     @IBAction func newPatientBtn(_ sender: Any) {

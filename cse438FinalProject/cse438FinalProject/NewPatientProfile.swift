@@ -44,6 +44,12 @@ class NewPatientProfile: UIViewController{
         
     }
     
+    @IBAction func backBtn(_ sender: Any) {
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainApp = storyboard.instantiateViewController(withIdentifier: "loginScreenID");
+        self.navigationController?.pushViewController(mainApp, animated: true)
+    }
+    
     @IBAction func createNewProfile(_ sender: Any) {
   
         let db = Firestore.firestore()
